@@ -7,6 +7,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 import matplotlib.pyplot as plt
 from matplotlib.image import imread
 import os
+import kagglehub
 
 class ImageRandomForestClassifier:
     def __init__(self, n_estimators=100, max_depth=None):
@@ -195,9 +196,10 @@ def main():
     # Initialize classifier
     classifier = ImageRandomForestClassifier(n_estimators=100, max_depth=10)
     
-    # Example paths - replace with your actual paths
-    training_folder = "path/to/training/data"
-    test_image = "path/to/test/image.jpg"
+    # Download the dataset and use its labeled image folders for training.
+    dataset_path = kagglehub.dataset_download("bhavikjikadara/dog-and-cat-classification-dataset")
+    print("Path to dataset files:", dataset_path)
+    training_folder = os.path.join(dataset_path, "PetImages")
     
     # Train classifier
     results = classifier.train(training_folder)
@@ -209,16 +211,6 @@ def main():
     print(results['classification_report'])
     print("\nTop 10 Important Features:")
     print(results['feature_importance'])
-    
-    # Classify and visualize test image
-    prediction, probabilities = classifier.predict(test_image)
-    print(f"\nPredicted class: {prediction}")
-    print("\nClass probabilities:")
-    for class_name, prob in probabilities.items():
-        print(f"{class_name}: {prob:.2f}")
-    
-    # Visualize results
-    classifier.visualize_results(test_image)
 
 if __name__ == "__main__":
     main()

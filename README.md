@@ -12,16 +12,13 @@
 
 A classical machine-learning project that classifies images as cats or dogs using image preprocessing, handcrafted pixel features, feature scaling, and a Random Forest classifier.
 
-## Overview
+python classifier.py
 
 The application reads labeled images from class-specific folders, converts images to grayscale, resizes them to a consistent `32 × 32` format, extracts pixel and statistical features, and trains a Random Forest model for classification.
 
 The project also reports evaluation results and can visualize the input image, prediction probabilities, and the model's most important features.
-
 ## System Architecture
-
-```mermaid
-flowchart LR
+The script downloads the Kaggle dataset on its first run, then trains and evaluates the classifier. To classify an individual image afterward, call `predict(image_path)` on the trained classifier.
     A[Cat and Dog Images] --> B[Dataset Loader]
     B --> C[Grayscale Conversion]
     C --> D[Resize to 32 x 32]
@@ -66,7 +63,7 @@ Cat-dog-image-classification/
 ├── LICENSE
 ├── requirements.txt
 ├── catDogClassification.png
-├── cat dog image classifier.py
+├── classifier.py
 ├── docs/
 │   └── README.md
 └── src/
@@ -96,8 +93,7 @@ The folder names become the model labels, so you can use `cats` and `dogs` or ot
 ### Prerequisites
 
 - Python 3.x
-- A labeled cat-and-dog image dataset
-- A test image for prediction
+- Internet access for the initial dataset download
 
 ### Install dependencies
 
@@ -105,20 +101,13 @@ The folder names become the model labels, so you can use `cats` and `dogs` or ot
 pip install -r requirements.txt
 ```
 
-### Configure paths
-
-Open `cat dog image classifier.py` and update the paths in `main()`:
-
-```python
-training_folder = "path/to/training/data"
-test_image = "path/to/test/image.jpg"
-```
-
 ### Run the classifier
 
 ```bash
-python "cat dog image classifier.py"
+python classifier.py
 ```
+
+The script downloads the Kaggle dataset on its first run, then trains and evaluates the classifier. To classify an individual image afterward, call `predict(image_path)` on the trained classifier.
 
 ## Model Configuration
 
@@ -141,7 +130,7 @@ After training, the program reports:
 - Classification report
 - Confusion matrix
 - Top 10 feature-importance values
-- Predicted class for the test image
+- Predicted class for a test image
 - Class probability estimates
 
 The visualization displays the input image, classification probabilities, and the most important model features.
@@ -150,7 +139,7 @@ The visualization displays the input image, classification probabilities, and th
 
 - The model uses handcrafted grayscale pixel features rather than a deep neural network.
 - Image quality, lighting, pose, and background can affect predictions.
-- The example requires users to provide their own dataset and image paths.
+- Individual predictions require an image path passed to `predict(image_path)`.
 - A balanced and sufficiently large dataset is recommended for meaningful evaluation.
 
 ## Future Improvements
